@@ -3,7 +3,7 @@ using UnityEngine.Rendering;
 
 public class LabPlayerController : MonoBehaviour
 {
-    private float speed = 5.0f;
+    public float speed = 5.0f;
     private Rigidbody playerRb;
 
     [SerializeField]
@@ -39,6 +39,23 @@ public class LabPlayerController : MonoBehaviour
         playerRb.AddForce(Vector3.forward * speed * verticalInput);
         playerRb.AddForce(Vector3.right * speed * horizontalInput);
 
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Player has collided with an enemy");
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("PowerUp"))
+        {
+            Destroy(other.gameObject);
+            Debug.Log("Player has collected a powerup");
+        }
     }
 
 }
